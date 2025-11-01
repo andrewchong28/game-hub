@@ -25,20 +25,24 @@ public class GameData {
     private Date gameReleaseDate;
 
     // A game can have multiple genres
-    private Set<GenreData> genres;
+    private Set<GenreData> genres = new HashSet<>();
 
     // Constructor: builds GameData from Game entity
     public GameData(Game game) {
+        this(game, true);
+    }
+
+    // Overloaded constructor to prevent infinite recursion
+    public GameData(Game game, boolean includeGenres) {
         this.gameId = game.getGameId();
         this.gameTitle = game.getGameTitle();
         this.gameDescription = game.getGameDescription();
         this.gameReleaseDate = game.getGameReleaseDate();
 
-        this.genres = new HashSet<>();
-
-        if (game.getGenres() != null) {
+        if (includeGenres && game.getGenres() != null) {
             for (Genre genre : game.getGenres()) {
-                this.genres.add(new GenreData(genre));
+                // call shallow GenreData (no games inside)
+                this.genres.add(new GenreData(genre, false));
             }
         }
     }
