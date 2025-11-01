@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    username: game_hub
+    password: game_hub
+    url: jdbc:mysql://localhost:3306/game_hub
+  jpa:
+    hibernate:
+      ddl-auto: create 
+    show-sql: true
