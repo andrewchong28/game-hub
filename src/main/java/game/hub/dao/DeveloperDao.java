@@ -6,9 +6,10 @@ import game.hub.entity.Developer;
 /*
  * 🔹 DeveloperDao
  * ----------------------
- * DAO for Developer entity.
+ * This is Data Access Object (DAO) for Developer entity.
  * Provides CRUD operations like save(), findById(), findAll(), delete(), etc.
  */
 public interface DeveloperDao extends JpaRepository<Developer, Integer> {
     // Add custom queries if needed
 }
+

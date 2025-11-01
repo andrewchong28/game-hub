@@ -6,7 +6,7 @@ import game.hub.entity.Game;
 /*
  * 🔹 GameDao
  * ----------------------
- * DAO for Game entity.
+ * This is Data Access Object (DAO) for Game entity.
  * Provides CRUD operations like save(), findById(), findAll(), delete(), etc.
  */
 public interface GameDao extends JpaRepository<Game, Integer> {

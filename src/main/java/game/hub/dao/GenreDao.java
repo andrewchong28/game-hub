@@ -6,7 +6,7 @@ import game.hub.entity.Genre;
 /*
  * 🔹 GenreDao
  * ----------------------
- * DAO for Genre entity.
+ * This is Data Access Object (DAO) for Genre entity.
  * Provides CRUD operations like save(), findById(), findAll(), delete(), etc.
  */
 public interface GenreDao extends JpaRepository<Genre, Integer> {

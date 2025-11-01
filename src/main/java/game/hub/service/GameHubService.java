@@ -1,15 +1,19 @@
 /*
  * Service:
 
+
  * Calls DAO
  * - fetches entities
  * - handles business logic
- * - converts entities to DTOs
+ * - converts entities to DTOs(Data Transfer OBjects)
  */
 package game.hub.service;
 
+import java.util.HashSet;
 import java.util.List;
+
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +47,7 @@ public class GameHubService {
 
     // Save or update a developer
     @Transactional
+    //when saveDeveloper() is called with no developerID then helper method findOrCreateDeveloper creates new developer. Called with a developerId then update.
     public DeveloperData saveDeveloper(DeveloperData developerData) {
         Developer developer = findOrCreateDeveloper(developerData.getDeveloperId());
         copyDeveloperFields(developer, developerData);
@@ -135,8 +140,19 @@ public class GameHubService {
         game.setGameTitle(gameData.getGameTitle());
         game.setGameDescription(gameData.getGameDescription());
         game.setGameReleaseDate(gameData.getGameReleaseDate());
-        // developer and genres can be handled here if needed
+        
+        // Handle Many-to-Many relationship between Game and Genre
+        if (gameData.getGenres() != null) {
+            Set<Genre> genres = new HashSet<>();
+            for (GenreData g : gameData.getGenres()) {
+                Genre genre = genreDao.findById(g.getGenreId())
+                        .orElseThrow(() -> new NoSuchElementException("Genre with ID=" + g.getGenreId() + " not found"));
+                genres.add(genre);
+            }
+            game.setGenres(genres);
+        }
     }
+    
 
     // =============================
     // GENRE METHODS
